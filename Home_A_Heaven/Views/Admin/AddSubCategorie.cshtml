@@ -1,0 +1,117 @@
+﻿@model Home_A_Heaven.Models.SubCategoryModel
+
+@{
+    ViewBag.Title = "AddSubCategorie";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int id = ViewBag.CategoryId;
+}
+
+<style>
+    body {
+        font-family: 'Times New Roman';
+        color: gray;
+    }
+
+    .texteditor {
+        border-radius: 0px;
+    }
+
+        .texteditor:focus {
+            border: 0px;
+            border-bottom: 1px solid blue;
+        }
+
+    .btn1 {
+        border-radius: 0px;
+    }
+</style>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Add Categories</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/Admin/Categories">All Categories</a></li>
+                    <li class="breadcrumb-item active">Add Category </li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<div class="content">
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="card card-primary col-6">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h3 class="card-title">Add New Sub Category</h3>
+                    </div>
+                    <form action="/Admin/AddSubCategorie" method="post" onsubmit="return valid()" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <input type="hidden" name="MainCateId" value="@id" />
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Sub Category Name</label>
+                                <input type="text" class="form-control texteditor" name="SubCateName" id="Title" placeholder="Enter Title">
+                            </div>
+                            <div id="TitleInvalid" class="text-danger"></div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Sub Category Images</label>
+                                <input type="file" class="form-control texteditor" name="ImageFile" id="Image" placeholder="Enter Title">
+                            </div>
+                            <div id="ImageInvalid" class="text-danger"></div>
+
+                        </div>
+                        <!-- /.card-body -->
+                        <input type="submit" class="btn1 btn btn-primary" value="Submit" />
+
+                    </form>
+
+
+                </div>
+            </div>
+            <!-- /.card -->
+            <!-- /.col-md-6 -->
+
+        </div>
+        <!-- /.row -->
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Categories")
+</div>
+@section scripts{
+    <script>
+        function valid() {
+
+            var Title = $("#Title").val();
+            var Image = $("#Image").val();
+            document.getElementById("TitleInvalid").innerHTML = "";
+            document.getElementById("ImageInvalid").innerHTML = "";
+
+
+
+            if (Title == "" || Title == undefined) {
+                document.getElementById("TitleInvalid").innerHTML = "Please Enter Your Title";
+                return false;
+            } if (Image == "" || Image == undefined) {
+                document.getElementById("ImageInvalid").innerHTML = "Please Upload Your Image";
+                return false;
+            }
+            else {
+                console.log("valid");
+                return true;
+            }
+            return false;
+
+        }
+
+
+    </script>
+}

@@ -1,0 +1,116 @@
+﻿@model Home_A_Heaven.Models.ProductModel
+    @using Home_A_Heaven.Models
+@{
+    ViewBag.Title = "ProductDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IEnumerable<ProductImageModel> productImages = ViewBag.ProductImages;
+}
+<!--Section: Block Content-->
+
+<style>
+    .btn1{
+        width:150px;
+        padding:10px;
+        margin-top:20px;
+        margin-bottom:40px;
+        color:white !important;
+        font-size:16px;
+        font-weight:600;
+        background-color:gray;
+    }
+        .btn1:hover {
+            opacity: 0.8;
+        }
+</style>
+<section class="mb-5">
+
+    <div class="row">
+        <div class="col-md-6 mb-4 mb-md-0">
+
+            <div id="mdb-lightbox-ui"></div>
+
+            <div class="mdb-lightbox">
+
+                <div class="row product-gallery mx-1">
+
+                    <div class="col-12 mb-0">
+                        <figure class="view overlay rounded z-depth-1 main-img">
+                            <a href="@Url.Content(@productImages.First().ImageURL)"
+                               data-size="710x823">
+                                <img src="@Url.Content(@productImages.First().ImageURL)"
+                                     class="img-fluid z-depth-1">
+                            </a>
+                        </figure>
+                      
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            @foreach (ProductImageModel images in productImages)
+                            {
+                                <div class="col-3">
+                                    <div class="view overlay rounded z-depth-1 gallery-item">
+                                        <img src="@Url.Content(images.ImageURL)"
+                                             class="img-fluid">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-6">
+
+            <h1>@Model.Name</h1>
+            <p class="mb-2 text-muted text-uppercase small"></p>
+
+            <h2><s>Rs: @Model.Old_Price/-</s> Rs:@Model.New_Price/-</h2>
+
+            <a href="/Home/Cart/@Model.Id" class="btn1 btn">ADD TO CART</a>
+            <div class="table-responsive">
+                <table class="table table-sm table-borderless mb-0">
+                    <tbody>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
+                            <td>@Model.Color</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>Matrial</strong></th>
+                            <td>@Model.Matrial</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>Size</strong></th>
+                            <td>@Model.Size</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="pt-1">
+               @Model.Discription
+            </p>
+            <hr>
+
+            @*<button type="button" class="btn btn-primary btn-md mr-1 mb-2">Buy now</button>
+            <button type="button" class="btn btn-light btn-md mr-1 mb-2">
+                <i class="fas fa-shopping-cart pr-2"></i>Add to cart
+            </button>*@
+        </div>
+    </div>
+
+</section>
+<!--Section: Block Content-->
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            // MDB Lightbox Init
+            $(function () {
+                $("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
+            });
+        });
+    </script>
+}

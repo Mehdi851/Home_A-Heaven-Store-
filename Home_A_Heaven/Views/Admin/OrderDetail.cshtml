@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Home_A_Heaven.Models.OrderDetailModel>
+@using Home_A_Heaven.Models
+@{
+    ViewBag.Title = "OrderDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 1;
+    IEnumerable<ProductModel> products = ViewBag.Products;
+}
+
+<style>
+    body {
+        font-family: 'Times New Roman';
+        color: gray;
+    }
+</style>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/Admin/ViewOrders">All Orders</a></li>
+                    <li class="breadcrumb-item">Order Detail</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header" style="border:0px;">
+                    <div class="d-flex justify-content-between">
+                        <h1 class="" style="color:black;">Order Detail</h1>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                No#
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProductId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Quantity)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UnitPrice)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Total)
+                            </th>
+
+                        </tr>
+                        @if (Model != null)
+                        {
+
+                            foreach (var item in Model)
+                            {
+                    <tr>
+                        @foreach (ProductModel product in products)
+                        {
+                            if (product.Id == item.ProductId)
+                            {
+                                <td>@count</td>
+                                <td>
+                                    @product.Name
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Total)
+                                </td>
+                            }
+                        }
+
+
+                    </tr>
+                                count = count + 1;
+                            }
+                        }
+                        else
+                        {
+
+                        }
+                    </table>
+
+
+
+                </div><!--Flex end-->
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<table class="table">
+    <tr>
+       
+       
+    </tr>
+
+
+</table>

@@ -1,0 +1,236 @@
+﻿@using Home_A_Heaven.Models
+@{
+    IEnumerable<CategoryModel> categories;
+    IEnumerable<SubCategoryModel>subCategories;
+    using (var db = new Home_A_HeavenDBEntities())
+    {
+        categories = db.Category1.Select(x => new CategoryModel
+        {
+            Id = x.Id,
+            CategoryName = x.CategoryName
+        }).ToList();
+        subCategories = db.SubCategories.Select(x => new SubCategoryModel
+        {
+            Id = x.Id,
+            SubCateName = x.SubCateName,
+            MainCateId = x.MainCateId
+        }).ToList();
+    }
+    }
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href="~/Content/Site.css" rel="stylesheet" />
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" ">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" />
+        <style>
+            body {
+                font-size: 14px;
+            }
+
+            .brand {
+                font-size: 20px;
+            }
+
+            .leftNav {
+                padding: 10px;
+                color: gray;
+            }
+
+            li {
+                list-style: none;
+            }
+
+            .cart-counter {
+                display: inline-block;
+                width: 20px;
+                opacity: 0;
+                height: 20px;
+                background: #ddd;
+                text-align: center;
+                border-radius: 50%;
+                margin-left: 10px;
+            }
+
+            .fab:hover {
+                opacity: 0.8;
+                font-size: 42px;
+            }
+        </style>
+    </head>
+
+    <body >
+
+        <header>
+
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand brand" href="/" style="margin-top:10px;font-weight:600;">
+                    Home A <span style="color:orange">Heaven</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse offset-3 " id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        @foreach (CategoryModel category in categories)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" style="font-size:16px;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   @category.CategoryName
+
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @foreach (SubCategoryModel subCategory in subCategories)
+                                    {
+                                        if (subCategory.MainCateId == category.Id)
+                                        {
+                                            <a class="dropdown-item" href="/Home/Collection/@subCategory.Id">@subCategory.SubCateName</a>
+                                        }
+                                    }
+                                    
+                                </div>
+                            </li>
+                           
+                      
+                        }
+
+
+                       
+                    </ul>
+                    <div class="justify-content-end">
+                        <ul class="d-flex flex-wrap">
+                            <li><a href="/Home/Search"> <i class="fa fa-search leftNav" aria-hidden="true"></i></a></li>
+                            
+                                <li><a href="/Home/Profile"> <i class="fa fa-user leftNav" aria-hidden="true"></i></a></li>
+
+                            
+
+                            @if (Session["CartCounter"] == null)
+                            {
+                                <li><a href="/Home/ShoppingCart"> <i class="fa fa-shopping-cart leftNav" aria-hidden="true"></i></a></li>
+
+                            }
+                            else
+                            {
+                                <li><a href="/Home/ShoppingCart"> <i class="fa fa-shopping-cart leftNav" aria-hidden="true"></i></a><span class=''>@Session["CartCounter"]</span></li>
+
+                            }
+                        </ul>
+                    </div>
+                    @*<form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </form>*@
+                </div>
+            </nav>
+
+        </header>
+
+        <div class=" body-content">
+            @RenderBody()
+            
+            <footer style="padding-top:50px;padding-bottom:80px; background-color:#202020;color:white;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h2 style="font-size:22px;font-style:italic; margin-bottom:40px;" class="offset-1">About Us</h2>
+                            <p style="text-align:justify; font-size:16px;" class="col-lg-10">
+                                To make house a beautiful home, we do different types of decorations like wall hangings, corner
+                                stands, table lamps, flower decoration... etc. Now a days due to COVID-19, we are required to stay
+                                home and go outside in case of very important work. So, to do a shopping in markets is risky. 
+                                We will provide an online Store to get All type of home Decuration at your door step.
+                            </p>
+                            <h3 class="col-lg-6"></h3>
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 style="font-size:22px;font-style:italic; margin-bottom:40px;" class="offset-1">Contact Us</h2>
+                            <p style="text-align:justify; font-size:20px;line-height:2.1; word-spacing:3px;" class="col-lg-10">
+                                <i class="fad fa-map-marker"></i>: Shop No 25, Main Murree Road,Waris Khan, Rawalpindi<br />
+                                <i class="far fa-phone"></i> Phone:(051) 0000000<br />
+                                <i class="fad fa-envelope"></i> Email: HomeAHeaven@Gmail.com<br />
+                                <i class="fab fa-skype"> Skype: www.Skype.com/Home_A_Heaven</i>
+                            </p>
+                        </div>
+                        <div class="col-lg-6 offset-4" style="margin-top:70px;">
+                            <p style="font-size:36px; word-spacing:15px;">
+                                <i class="fab fa-facebook"></i>
+                                <i class="fab fa-google-plus"></i>
+                                <i class="fab fa-instagram"></i>
+                                <i class="fab fa-pinterest"></i>
+                                <i class="fab fa-twitter"></i>
+                                <i class="fab fa-youtube"></i>
+                            </p>
+                            <hr />
+                          
+                        </div>
+
+                    </div>
+                </div>
+                <div class="end-footer footer-area">
+                <div class="container no-padding">
+                    <div class="ts-col-24">
+                    <div id="ts_footer_block-4" class="widget-container ts-footer-block">
+                        <div class="vc_row wpb_row vc_row-fluid vc_custom_1474460712483 ts-row-wide vc_row-no-padding mpc-row" data-vc-full-width="true" data-vc-full-width-init="true" data-vc-stretch-content="true" style="position: relative; left: -20px; box-sizing: border-box; width: 989px;">
+                        <div class="wpb_column vc_column_container vc_col-sm-12 mpc-column" data-column-id="mpc_column-836038a3aa273b4">
+                            <div class="wpb_wrapper">
+                            <div class="vc_separator wpb_content_element vc_separator_align_center vc_sep_width_100 vc_sep_pos_align_center vc_separator_no_text">
+                                <span class="vc_sep_holder vc_sep_holder_l">
+                                <span style="border-color:#8c8c8c;" class="vc_sep_line"></span>
+                                </span>
+                                <span class="vc_sep_holder vc_sep_holder_r"><span style="border-color:#8c8c8c;" class="vc_sep_line">
+                                      </span>
+                                    </span>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="vc_row-full-width">
+                            </div>
+                        <div class="vc_row wpb_row vc_row-fluid vc_custom_1492797021714 ts-row-wide mpc-row">
+                        <div class="wpb_column vc_column_container vc_col-sm-12 mpc-column" data-column-id="mpc_column-246038a3aa27786">
+                            <div class="wpb_wrapper"><div class="wpb_text_column wpb_content_element ">
+                                <div class="wpb_wrapper">
+                                <p style="text-align: center;">© 2021 E-Shop. All Rights Reserved by Home A Heaven</p>
+                                    </div>
+                                 </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <script>
+
+            console.log("test");
+
+            $('#searchForm').on('shown.bs.collapse', function () {
+                // focus input on collapse
+                $("#search").focus()
+            })
+        </script>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    </body>
+</html>

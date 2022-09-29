@@ -1,0 +1,158 @@
+﻿@model IEnumerable<Home_A_Heaven.Models.ProductModel>
+@using Home_A_Heaven.Models
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    body {
+        font-family: 'Times New Roman';
+        color: gray;
+        padding: 0px;
+    }
+    
+
+    h1 {
+        margin-left: 50px;
+        font-size: 28px;
+    }
+
+    .feild-group {
+        margin-top: 30px;
+    }
+
+    label {
+        margin-top: 10px;
+    }
+
+    h1 {
+        margin-left: 50px;
+        font-size: 28px;
+    }
+    .feild {
+        border-radius: 0px !important;
+    }
+
+    .btn-group {
+        margin-top: 40px;
+    }
+
+    .btn1 {
+        border-radius: 0px;
+        font-size: 20px;
+        padding: 10px;
+    }
+    .collection {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        margin-left: 0px;
+    }
+
+    
+
+    .colloection-item {
+        width: 230px;
+        height: 250px;
+        margin: 15px;
+        border: 1px solid orange;
+    }
+
+        .colloection-item:hover {
+            opacity: 0.8;
+            -ms-transform: scale(1.1); /* IE 9 */
+            -webkit-transform: scale(1.1); /* Safari 3-8 */
+            transform: scale(1.1);
+        }
+
+    .collection-text {
+        position: relative;
+        text-align: center;
+        /*  margin-top:-170px;*/
+        color: black;
+        font-weight: bold;
+    }
+
+    .price {
+        margin-left: 15px;
+    }
+
+   
+
+   
+
+   
+</style>
+
+
+<div class="">
+    <div class="row">
+       
+        <div class="offset-lg-3 col-lg-6">
+            <form action="/Home/Search" method="post">
+                <div class="form-group-lg feild-group">
+                    <input class="form-control col-lg-12 feild" type="text" name="SearchString" placeholder="Search Your Product" />
+                    <div class="offset-5 btn-group">
+                        <input type="submit" class="btn btn-secondary btn1 " value="Search" />
+
+                    </div>
+                   
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+<section class="collection ">
+
+
+    @*<h2 class="sec-head offset-5 ">Search Result</h2>*@
+
+
+    <div class="container">
+        <div class="d-flex flex-wrap">
+            @if (Model != null)
+            {
+                foreach (ProductModel product in Model)
+                {
+                    <div>
+                        <a href="/Home/ProductDetail/@product.Id"><img class="colloection-item" src="@Url.Content(@ProductImage(product.Id))" alt="@product.Name" /></a>
+                        <div class="price">
+                            <h2>@product.Name</h2>
+                            <p><s>Rs: @product.Old_Price/-</s> Rs:@product.New_Price/-</p>
+                        </div>
+                    </div>
+                }
+            }
+            
+
+
+        </div>
+    </div>
+</section>
+@functions{
+    public string ProductImage(int ProductId)
+    {
+        string productImage = "";
+        IEnumerable<ProductImageModel> productImages = ViewBag.ProductImages;
+        List<string> ImagesUrls = new List<string>();
+        if (productImages != null)
+        {
+            foreach (ProductImageModel image in productImages)
+            {
+                if (image.productId == ProductId)
+                {
+                    ImagesUrls.Add(image.ImageURL);
+                }
+            }
+            productImage = ImagesUrls.First();
+        }
+
+        return productImage;
+
+
+    }
+
+}

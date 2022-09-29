@@ -1,0 +1,120 @@
+﻿@model Home_A_Heaven.Models.UserModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.Massage != null)
+    {
+        <script>
+            alert('@ViewBag.Massage');
+        </script>
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Times New Roman';
+            color: gray;
+        }
+
+        h1 {
+            margin-left: 50px;
+            font-size: 28px;
+        }
+
+        .feild-group {
+            margin-top: 30px;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        .feild {
+            border-radius: 0px !important;
+        }
+
+        .btn-group {
+            margin-top: 40px;
+        }
+
+        .btn1 {
+            border-radius: 0px;
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        h2 {
+            margin-left: -15px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-top:0px; border:1px solid lightgray; padding-bottom:100px;padding-top:100px;">
+            <div class="offset-5">
+                <h1>Login</h1>
+            </div>
+            <div class="col-lg-6 offset-3" >
+                <form action="/Home/Login" method="post" onsubmit="return valid()">
+                    <div class="form-group-lg feild-group">
+                        <label>Email</label>
+                        <input class="form-control col-lg-12 feild" type="email" name="Email" id="email" />
+                    </div>
+                    <div id="emailInvalid" class="text-danger"></div>
+                    <div class="form-group-lg feild-group">
+                        <label>Password</label>
+                        <input class="form-control col-lg-12 feild" type="password" name="Password" id="password" />
+                    </div>
+                    <div id="passwordInvalid" class="text-danger"></div>
+                    <div class="offset-5 btn-group">
+                        <input type="submit" class="btn btn-secondary btn1 " value="SIGN IN" />
+
+                    </div>
+                    <div class="offset-5 btn-group">
+
+                        <a href="/Home/Register"><h2>Create an Account</h2></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+@section scripts{
+    <script>
+        function valid() {
+
+            var email = $("#email").val();
+            var password = $("#password").val();
+            document.getElementById("emailInvalid").innerHTML = "";
+            document.getElementById("passwordInvalid").innerHTML = "";
+
+
+
+            if (email == "" || email == undefined) {
+                document.getElementById("emailInvalid").innerHTML = "Please Enter Your Email";
+                return false;
+            } if (password == "" || password == undefined) {
+                document.getElementById("passwordInvalid").innerHTML = "Please Enter Your Password";
+                return false;
+            }
+            else {
+                console.log("valid");
+                return true;
+            }
+            return false;
+
+        }
+
+
+    </script>
+}

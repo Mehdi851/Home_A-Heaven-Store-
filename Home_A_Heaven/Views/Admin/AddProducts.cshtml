@@ -1,0 +1,283 @@
+﻿@model Home_A_Heaven.Models.ProductModel
+@using Home_A_Heaven.Models 
+@{
+    ViewBag.Title = "AddProducts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var categoriesList = new List<string>() { "" };
+    IEnumerable<CategoryModel> jobCategories = ViewBag.Categories;
+    foreach (CategoryModel item in jobCategories)
+    {
+        categoriesList.Add(item.CategoryName.ToString());
+    }
+}
+<style>
+    body {
+        font-family: 'Times New Roman';
+        color: gray;
+    }
+
+    .texteditor {
+        border-radius: 0px;
+    }
+
+        .texteditor:focus {
+            border: 0px;
+            border-bottom: 1px solid blue;
+        }
+
+    .btn1 {
+        border-radius: 0px;
+    }
+</style>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">Dashboard</li>
+
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header" style="border:0px;">
+                    <div class="d-flex justify-content-between">
+                        <h4 class="" style="color:black;">Add Product</h4>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <div class="">
+                            <div class="offset-lg-2 ">
+                                @*@using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()*@
+                                <form action="/Admin/AddProducts" method="post" onsubmit="return valid()" enctype="multipart/form-data">
+
+                                    <div class="form-horizontal">
+                                        <div class="col-lg-5">
+
+                                        </div>
+                                        <div class="col-lg-5">
+
+                                        </div>
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            @* @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control texteditor", @id = "Name", @placeholder = "Name of product" } })
+                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", @id = "NameError" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @*  @Html.Label("Old Price", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Old_Price, new { htmlAttributes = new { @class = "form-control texteditor", @id = "OldPrice", @placeholder = "Old Price" } })
+                                                @Html.ValidationMessageFor(model => model.Old_Price, "", new { @class = "text-danger", @id = "OldPriceError" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @*@Html.Label("New Price", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.New_Price, new { htmlAttributes = new { @class = "form-control texteditor", @id = "NewPrice", @placeholder = "New Price" } })
+                                                @Html.ValidationMessageFor(model => model.New_Price, "", new { @class = "text-danger", @id = "NewPriceError" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @*  @Html.Label("Discount", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control texteditor", @id = "Discount", @placeholder = "Discount" } })
+                                                @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger", @id = "DiscountError" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @*  @Html.Label("Discount", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("Category", new SelectList(categoriesList),"Select Category", htmlAttributes: new { @class = "form-control texteditor", @id = "category" })
+                                                <span id="CategoryError" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @*  @Html.Label("Discount", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("subCategory", new SelectList(""), htmlAttributes: new { @class = "form-control texteditor", @id = "subCategory" })
+                                                <span id="CategoryError" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @* @Html.LabelFor(model => model.Matrial, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Matrial, new { htmlAttributes = new { @class = "form-control texteditor", @id = "Matrial", @placeholder = "Product Matrial" } })
+                                                @Html.ValidationMessageFor(model => model.Matrial, "", new { @class = "text-danger", @id = "MatrialError" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @* @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control texteditor", @id = "Color", @placeholder = "Product Color" } })
+                                                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger", @id = "ColorError" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @*  @Html.LabelFor(model => model.Height, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Height, new { htmlAttributes = new { @class = "form-control texteditor", @id = "height", @placeholder = "Product Height" } })
+                                                @Html.ValidationMessageFor(model => model.Height, "", new { @class = "text-danger", @id = "heightError" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @*   @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control texteditor", @id = "Size", @placeholder = "Product Size" } })
+                                                @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger", @id = "SizeError" })
+                                            </div>
+                                        </div>
+
+
+
+                                        <!--<div class="form-group">-->
+                                        @* @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                        <!--<div class="col-md-10">
+                                        @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control texteditor", @placeholder = "Product Status" } })
+                                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>-->
+
+                                        <div class="form-group">
+                                            @* @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control texteditor", @id = "Type", @placeholder = "Product Type" } })
+                                                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger", @id = "TypeError" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @* @Html.LabelFor(model => model.Discription, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                <textarea name="Discription" class="form-control ckeditor" placeholder="Enter Product Discriptions"></textarea>
+                                                @*@Html.TextAreaFor(model => model.Discription, new { htmlAttributes = new { @class = "form-control ckeditor", @placeholder = "Product Discription" } })*@
+                                                @Html.ValidationMessageFor(model => model.Discription, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <input type="submit" value="Create" class="btn1 btn btn-outline-primary" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                @*}*@
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div><!--Flex end-->
+            </div>
+
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            $("#category").change(function () {
+                $.get("/Admin/GetSubCategories", { CategoryName: $("#category").val() }, function (data) {
+                    $("#subCategory").empty();
+                    $.each(data, function (index, row) {
+                       
+                        $("#subCategory").append("<option value='" + row.SubCateName + "'>" + row.SubCateName + "</option>");
+                    });
+                });
+            });
+
+        });
+        function valid() {
+
+            var Name = $("#Name").val();
+            var OldPrice = $("#OldPrice").val();
+            var NewPrice = $("#NewPrice").val();
+            var Discount = $("#Discount").val();
+            var Matrial = $("#Matrial").val();
+            var Color = $("#Color").val();
+            var height = $("#height").val();
+            var Size = $("#Size").val();
+            var Type = $("#Type").val();
+            document.getElementById("NameError").innerHTML = "";
+            document.getElementById("OldPriceError").innerHTML = "";
+            document.getElementById("NewPriceError").innerHTML = "";
+            document.getElementById("DiscountError").innerHTML = "";
+            document.getElementById("MatrialError").innerHTML = "";
+            document.getElementById("ColorError").innerHTML = "";
+            document.getElementById("heightError").innerHTML = "";
+            document.getElementById("SizeError").innerHTML = "";
+            document.getElementById("TypeError").innerHTML = "";
+
+            //alert("test");
+
+            if (Name == "" || Name == undefined) {
+                document.getElementById("NameError").innerHTML = "Please Enter Your Product Name";
+                return false;
+            }
+            if (OldPrice == "" || OldPrice == undefined) {
+                document.getElementById("OldPriceError").innerHTML = "Please Enter Your Product Old Price";
+                return false;
+            }
+            if (NewPrice == "" || NewPrice == undefined) {
+                document.getElementById("NewPriceError").innerHTML = "Please Enter Your Product New Price";
+                return false;
+            }
+            if (Discount == "" || Discount == undefined) {
+                document.getElementById("DiscountError").innerHTML = "Please Enter Your Product Discount";
+                return false;
+            }
+            if (Matrial == "" || Matrial == undefined) {
+                document.getElementById("MatrialError").innerHTML = "Please Enter Your Product Matrial";
+                return false;
+            }
+            if (Color == "" || Color == undefined) {
+                document.getElementById("ColorError").innerHTML = "Please Enter Your Product Color";
+                return false;
+            }
+            if (height == "" || height == undefined) {
+                document.getElementById("heightError").innerHTML = "Please Enter Your Product Height";
+                return false;
+            }
+            if (Size == "" || Size == undefined) {
+                document.getElementById("SizeError").innerHTML = "Please Enter Your Product Size";
+                return false;
+            }
+            if (Type == "" || Type == undefined) {
+                document.getElementById("TypeError").innerHTML = "Please Enter Your Product Type";
+                return false;
+            }
+            else {
+                console.log("valid");
+                return true;
+            }
+            return false;
+
+        }
+
+
+    </script>
+}

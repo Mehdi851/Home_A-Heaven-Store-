@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        font-family: 'Times New Roman';
+        color: gray;
+    }
+
+    h1 {
+        margin-left: 50px;
+        font-size: 28px;
+    }
+
+    .feild-group {
+        margin-top: 30px;
+    }
+
+    label {
+        margin-top: 10px;
+    }
+
+    .feild {
+        border-radius: 0px !important;
+    }
+
+    .btn-group {
+        margin-top: 40px;
+    }
+
+    .btn1 {
+        border-radius: 0px;
+        font-size: 20px;
+        padding: 10px;
+    }
+
+    h2 {
+        margin-left: -15px;
+        color: gray;
+    }
+</style>
+<div class="container">
+    <div class="row"style="margin-top:0px; border:1px solid lightgray; padding-bottom:100px;padding-top:100px;">
+        <div class="offset-4">
+            <h1>Create Account</h1>
+        </div>
+        <div class="col-lg-6 offset-3">
+            <form action="/Home/Register" method="post" onsubmit="return valid()">
+                <div class="form-group-lg feild-group">
+                    <label>Username</label>
+                    <input class="form-control col-lg-12 feild" type="text" name="Username" id="username" />
+                </div>
+                <div id="usernameInvalid" class="text-danger"></div>
+
+                <div class="form-group-lg feild-group">
+                    <label>Email</label>
+                    <input class="form-control col-lg-12 feild" type="email" name="Email" id="email" />
+                </div>
+                <div id="emailInvalid" class="text-danger"></div>
+
+                <div class="form-group-lg feild-group">
+                    <label>Password</label>
+                    <input class="form-control col-lg-12 feild" type="password" name="Password" id="password" />
+                </div>
+                <div id="passwordInvalid" class="text-danger"></div>
+                
+                <div class="form-group-lg feild-group">
+                    <label>Retry-Password</label>
+                    <input class="form-control col-lg-12 feild" type="password" name="Password" id="rePassword" />
+                </div>
+                <div id="rePasswordInvalid" class="text-danger"></div>
+
+                <div class="form-group-lg feild-group">
+                    <label>Contect No</label>
+                  
+                     <input class="form-control col-lg-12 feild" type="text" name="ContactNo" id="contactNo" placeholder="XXXX-XXXXXXX" />
+                </div>
+                <div id="contactNoInvalid" class="text-danger"></div>
+
+                <div class="form-group-lg feild-group">
+                    <label>Address</label>
+                    <input class="form-control col-lg-12 feild" type="text" name="Address" id="address" />
+                </div>
+                <div id="addressInvalid" class="text-danger"></div>
+
+                <div class="offset-5 btn-group">
+                    <input type="submit" class="btn btn-secondary btn1 " value="Create" />
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+       
+        function valid() {
+
+            var username = $("#username").val();
+            var email = $("#email").val();
+            var password = $("#password").val();
+            var rePassword = $("#rePassword").val();
+            var contactNo = $("#contactNo").val();
+            var address = $("#address").val();
+            document.getElementById("usernameInvalid").innerHTML = "";
+            document.getElementById("emailInvalid").innerHTML = "";
+            document.getElementById("passwordInvalid").innerHTML = "";
+            document.getElementById("rePasswordInvalid").innerHTML = "";
+            document.getElementById("contactNoInvalid").innerHTML = "";
+            document.getElementById("addressInvalid").innerHTML = "";
+
+
+
+
+            if (username == "" || username == undefined) {
+                document.getElementById("usernameInvalid").innerHTML = "Please Enter Your Username";
+                return false;
+            }
+            if (email == "" || email == undefined) {
+                document.getElementById("emailInvalid").innerHTML = "Please Enter Your Email";
+                return false;
+            }
+            if (password == "" || password == undefined) {
+                document.getElementById("passwordInvalid").innerHTML = "Please Enter Your Password";
+                return false;
+            }
+            if (rePassword == "" || rePassword == undefined) {
+                document.getElementById("rePasswordInvalid").innerHTML = "Please Enter Your Retry Password";
+                return false;
+            }
+            if (rePassword != password) {
+                document.getElementById("rePasswordInvalid").innerHTML = "Your Password does not match";
+                return false;
+            }
+            if (contactNo == "" || contactNo == undefined) {
+                document.getElementById("contactNoInvalid").innerHTML = "Please Enter Your Contact No";
+                return false;
+            }
+            if (contactNo.length > 11 || contactNo.length <11) {
+                document.getElementById("contactNoInvalid").innerHTML = "Contact No must be 11 digits";
+                return false;
+            }
+            if (isNaN(contactNo)) {
+                document.getElementById("contactNoInvalid").innerHTML = "Please Enter Numaric value";
+                return false;
+            }
+            
+            if (address == "" || address == undefined) {
+                document.getElementById("addressInvalid").innerHTML = "Please Enter Your Address";
+                return false;
+            }
+            else {
+                console.log("valid");
+                return true;
+            }
+            return false;
+
+        }
+
+    </script>
+}

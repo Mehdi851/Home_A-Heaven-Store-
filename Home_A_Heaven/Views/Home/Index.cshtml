@@ -1,0 +1,226 @@
+﻿@model IEnumerable<ProductModel>
+@using Home_A_Heaven.Models;
+
+@{
+    ViewBag.Title = "Home Page";
+    IEnumerable<CategoryModel> categories = ViewBag.Categories;
+    IEnumerable<SubCategoryModel> subCategories = ViewBag.SubCategories;
+    IEnumerable<ProductImageModel> productImages = ViewBag.ProductImages;
+}
+<style>
+    body {
+        font-family: 'Times New Roman';
+        color: gray;
+        padding: 0px;
+    }
+
+    .header-sect {
+        width: 100%;
+        height: 110%;
+    }
+
+        .header-sect:hover {
+            opacity: 0.8;
+        }
+
+    .collection {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .sec-head {
+        font-size: 32px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .colloection-item {
+        width: 200px;
+        height: 300px;
+        margin:0px;
+        border: 1px solid orange;
+    }
+
+        .colloection-item:hover {
+            opacity: 0.8;
+            -ms-transform: scale(1.1); /* IE 9 */
+            -webkit-transform: scale(1.1); /* Safari 3-8 */
+            transform: scale(1.1);
+        }
+
+    .collection-text {
+        position: relative;
+        text-align: center;
+          margin-top:20px;
+        color: gray;
+        font-weight: bold;
+    }
+
+    .Category-Section {
+        padding: 0px;
+        margin-top: 0px;
+    }
+
+    .cate-head {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        text-align: center;
+    }
+
+    .cate-item {
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: gray;
+    }
+
+        .cate-item:hover {
+            border-bottom: 2px solid orange;
+            font-size: 16px;
+        }
+
+    #pagination-container {
+        display: flex;
+    }
+
+    .page-link {
+        width: 30px;
+    }
+
+    .current .next {
+        position: relative;
+        display: block;
+        padding: .5rem .75rem;
+    }
+    .content-area{
+        width:90%;
+
+        
+    }
+    
+</style>
+<a href="/Home/AllCollection"><img class="header-sect" src="~/Images/Home section.jpg" /></a>
+
+<section class="collection " style="margin:0px;">
+
+    <div class="">
+        <h1 class="sec-head offset-5 ">Collections List</h1>
+        <div id="sslider" class="owl-carousel">
+            <div class="content-area">
+                <div class="">
+                    <a href="/Home/Collection/Shelves"> <img class="colloection-item" src="~/Images/image.jpg" alt="shelves" /></a>
+                    <div class="collection-text">
+                        <h2>Shelves 1</h2>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row" style="border:1px solid lightgray; margin:0px;">
+            <div class="col-lg-3 Category-Section" style="border:1px solid lightgray;">
+                <div class="cate-head" style="border-bottom:1px solid lightgray;">
+                    <h2>Categoies</h2>
+                </div>
+                <div class="cate-item">
+                    <a href="/" style="color:gray;">All</a>
+                </div>
+                @foreach (CategoryModel item in categories)
+                {
+                    <div class="cate-item">
+                        <a href="/Home/ProductCategoryWise/@item.Id" style="color:gray;">@item.CategoryName</a>
+                    </div>
+                }
+
+
+            </div>
+            <div class="col-lg-8" style="margin-top:30px; margin-left:60px;">
+                <div id="slider" class="owl-carousel owl-theme">
+
+                    @if (Model != null)
+                    {
+                        foreach (ProductModel product in Model)
+                        {<div class="content-area">
+                                <div class="list-item">
+                                    @foreach (ProductImageModel productImage in productImages)
+                                    {
+                                        if (productImage.productId == product.Id)
+                                        {
+                                            <a href="/Home/ProductDetail/@product.Id"><img class="colloection-item" src="@Url.Content(productImage.ImageURL)" alt="chair" /></a>
+
+                                        }
+                                    }
+                                <div class="collection-text">
+
+                                    <h2>@product.Name</h2>
+                                   
+                                    <h2><s>Rs: @product.Old_Price/-</s> Rs:@product.New_Price/-</h2>
+                                </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+
+                </div>
+
+                @*<div class="col-lg-12 pagination">
+                    <div class="col-lg-4 offset-3" id="pagination-container"></div>
+
+                </div>*@
+            </div>
+          
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.4/jquery.simplePagination.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+    <script>
+        var next = "<i class='fas fa-forward'></i>";
+        var priv = "<i class='fas fa-backward'></i>";
+        $('#slider').owlCarousel({
+            loop: true,
+            margin: 8,
+            nav: true,
+            navText: [priv, next ],
+            autoplay:true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+        var items = $(".list-wrapper .list-item");
+        var numItems = items.length;
+        var perPage = 6;
+
+        items.slice(perPage).hide();
+
+        $('#pagination-container').pagination({
+            items: numItems,
+            itemsOnPage: perPage,
+            prevText: "&laquo;",
+            nextText: "&raquo;",
+
+            onPageClick: function (pageNumber) {
+                var showFrom = perPage * (pageNumber - 1);
+                var showTo = showFrom + perPage;
+                items.hide().slice(showFrom, showTo).show();
+            },
+            cssStyle: 'light-theme',
+        });
+        console.log("js test");
+
+    </script>
+}

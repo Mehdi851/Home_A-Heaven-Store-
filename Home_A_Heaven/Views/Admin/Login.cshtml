@@ -1,0 +1,122 @@
+﻿@model Home_A_Heaven.Models.AdminModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link href="~/fonts/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="~/Content/Admin/adminlte.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link href="~/plugins/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/plugins/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <link href="~/Content/util.css" rel="stylesheet" />
+    <style>
+        .login-bg {
+            background-image: url('../Images/bg-01.jpg');
+        }
+    </style>
+</head>
+<body class="hold-transition login-page">
+
+    <div class="limiter">
+        <div class="container-login100 login-bg" >
+            <div class="wrap-login100 p-t-30 p-b-50">
+                <span class="login100-form-title p-b-41">
+                    Admin Login
+                </span>
+                <form class="login100-form validate-form p-b-33 p-t-5" action="/Admin/Login" method="post" onsubmit="return validateform()">
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter username">
+
+                        <input class="input100" type="email" name="Email" id="email" placeholder="User name">
+                        <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                    </div>
+                    <div id="emailValid" class="text-danger"></div>
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <input class="input100" type="password" name="Password" id="pass" placeholder="Password">
+                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                    </div>
+                    <div id="passValid" class="text-danger"></div>
+                    <div class="container-login100-form-btn m-t-32">
+                        <button class="login100-form-btn">
+                            Login
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/countdowntime/countdowntime.js"></script>
+    <script src="~/Scripts/LoginForm.js"></script>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    @*<script src="../../plugins/jquery/jquery.min.js"></script>*@
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    @*<script src="../../dist/js/adminlte.min.js"></script>*@
+    <script src="~/Scripts/adminlte.min.js"></script>
+    <script>
+
+        function validateform() {
+            var email = $("#email").val();
+            var pass = $("#pass").val();
+            document.getElementById("emailValid").innerHTML = "";
+            document.getElementById("passValid").innerHTML = "";
+
+
+            if (email == "" || email == undefined) {
+                document.getElementById("emailValid").innerHTML = "Please Enter Your Email";
+                return false;
+            }
+            if (pass == "" || pass == undefined) {
+                document.getElementById("passValid").innerHTML = "Please Enter Your Password";
+                return false;
+            }
+            else {
+                console.log("valid");
+                return true;
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+﻿@model Home_A_Heaven.Models.ProductImageModel
+@using Home_A_Heaven.Models
+@{
+    ViewBag.Title = "AddProductImages";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ProductModel product=new ProductModel();
+    if (ViewBag.Product!=null)
+    {
+        product = ViewBag.Product;
+
+    }
+}
+
+<style>
+    body {
+        font-family: 'Times New Roman';
+        color: gray;
+    }
+
+    .texteditor {
+        border-radius: 0px;
+    }
+
+        .texteditor:focus {
+            border: 0px;
+            border-bottom: 1px solid blue;
+        }
+
+    .btn1 {
+        border-radius: 0px;
+    }
+</style>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Add Product Images</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/Admin/ProductImages">Product Images</a></li>
+                    <li class="breadcrumb-item active">Add Images </li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<div class="content">
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="card card-primary col-6">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h3 class="card-title">Add New Product Image</h3>
+                    </div>
+                    <form action="/Admin/AddProductImages" method="post" onsubmit="return valid()" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <input type="hidden" value="@product.Id" name="productId" />
+                                <label for="exampleInputEmail1">Product Name</label>
+                                <input type="text" class="form-control texteditor" name="ProductName" id="" disabled value="@product.Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Upload Image</label>
+                                <input type="file" class="form-control texteditor" name="ImageFile" id="Title" placeholder="Enter Title">
+                            </div>
+                            <div id="TitleInvalid" class="text-danger"></div>
+
+                        </div>
+                        <!-- /.card-body -->
+                        <input type="submit" class="btn1 btn btn-primary" value="Submit" />
+
+                    </form>
+
+
+                </div>
+            </div>
+            <!-- /.card -->
+            <!-- /.col-md-6 -->
+
+        </div>
+        <!-- /.row -->
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function valid() {
+
+            var Title = $("#Title").val();
+            document.getElementById("TitleInvalid").innerHTML = "";
+
+            //alert("test");
+
+            if (Title == "" || Title == undefined) {
+                document.getElementById("TitleInvalid").innerHTML = "Please Enter Your Title";
+                return false;
+            }
+            else {
+                console.log("valid");
+                return true;
+            }
+            return false;
+
+        }
+
+
+    </script>
+}

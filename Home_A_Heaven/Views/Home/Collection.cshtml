@@ -1,0 +1,165 @@
+﻿@model IEnumerable<Home_A_Heaven.Models.ProductModel>
+    @using Home_A_Heaven.Models
+@{
+    ViewBag.Title = "Collection";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string CollectionTitle = ViewBag.CollTitle;
+    int id = ViewBag.SubCatId;
+}
+<style>
+    body {
+        font-family: 'Times New Roman';
+        color: gray;
+        padding: 0px;
+    }
+
+    .collection {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        margin-left:0px;    
+    }
+
+    .sec-head {
+        font-size: 32px;
+        margin-bottom:30px;
+    }
+
+    .colloection-item {
+        width: 230px;
+        height: 250px;
+        margin: 15px;
+        border: 1px solid orange;
+    }
+
+        .colloection-item:hover {
+            opacity: 0.8;
+            -ms-transform: scale(1.1); /* IE 9 */
+            -webkit-transform: scale(1.1); /* Safari 3-8 */
+            transform: scale(1.1);
+        }
+
+    .collection-text {
+        position: relative;
+        text-align: center;
+        /*  margin-top:-170px;*/
+        color: black;
+        font-weight: bold;
+    }
+    .price{
+        margin-left:15px;
+    }
+
+    .collHead {
+        border-top: 1px solid gray;
+        border-bottom: 1px solid gray;
+        padding:15PX;
+    }
+
+    .type {
+        float: left;
+    }
+
+    .collNo {
+        margin-top: 10px;
+        font-style: italic;
+        
+    }
+    .sort{
+        float:right;
+        margin-top:-30px;
+    }
+</style>
+
+
+
+
+<section class="collection offset-1">
+
+
+    <h1 class="sec-head offset-5 ">All Products</h1>
+    <div class="collHead">
+        <div class="">
+            @*<div class="type">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" style="color:gray;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Filter
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Type 1</a>
+                            <a class="dropdown-item" href="#">Type 2</a>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>*@
+            <div class="offset-lg-5 collNo">
+                <h2>@Model.Count() Products</h2>
+            </div>
+            <div class="sort" style="margin-right:70px;">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" style="color:gray; font-size:18px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sort
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size:14px;">
+                            <a class="dropdown-item" href="/Home/AtoZ/@id">Alphabetically A to Z</a>
+                            <a class="dropdown-item" href="/Home/ZtoA/@id">Alphabetically Z to A</a>
+                            <a class="dropdown-item" href="/Home/LowtoHigh/@id">Price Low To High</a>
+                            <a class="dropdown-item" href="/Home/HightoLow/@id">Price High To Low</a>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+   
+    <div class="container">
+        <div class="d-flex flex-wrap">
+            @foreach (ProductModel product in Model)
+            {
+            <div>
+                <a href="/Home/ProductDetail/@product.Id"><img class="colloection-item" src="@Url.Content(@ProductImage(product.Id))" alt="@product.Name" /></a>
+                <div class="price">
+                    <h2>@product.Name</h2>
+                    <p><s>Rs: @product.Old_Price/-</s> Rs:@product.New_Price/-</p>
+                </div>
+            </div>
+            }
+
+
+        </div>
+    </div>
+</section>
+@functions{ 
+    public string ProductImage(int ProductId)
+    {
+        string productImage = "";
+        IEnumerable<ProductImageModel> productImages = ViewBag.ProductImages;
+        List<string> ImagesUrls= new List<string>();
+        foreach (ProductImageModel image in productImages)
+        {
+            if (image.productId==ProductId)
+            {
+                ImagesUrls.Add(image.ImageURL);
+            }
+        }
+        productImage = ImagesUrls.First();
+        return productImage;
+        //using (var db = new Home_A_HeavenDBEntities())
+        //{
+        //    ProductImageModel image = db.ProductImages.Where(x => x.productId == ProductId).Select(x => new ProductImageModel
+        //    {
+        //        Id = x.Id,
+        //        ImageURL = x.ImageURL
+
+        //    }).FirstOrDefault();
+        //    productImage = image.ImageURL;
+        //    return productImage;
+        //}
+
+    }
+
+}

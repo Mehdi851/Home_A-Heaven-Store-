@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Home_A_Heaven.Models.ProductImageModel>
+@using Home_A_Heaven.Models
+@{
+    ViewBag.Title = "ProductImages";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int ProductId = 0;
+    if (ViewBag.ProductId!=null)
+    {
+        ProductId = ViewBag.ProductId;
+    }
+}
+<style>
+    body {
+        font-family: 'Times New Roman';
+        color: gray;
+    }
+
+    .btn1 {
+        border-radius: 0px;
+    }
+</style>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Pictures</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Product Pictures </li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<div class="content">
+
+    <div class="container-fluid">
+
+
+        <div class="card">
+            <div class="card-header ">
+                <div class="d-flex justify-content-between">
+                    <h1 style="float:left;">All Pictures</h1>
+                    <span><a href="/Admin/AddProductImages/@ProductId" style="float:right;" class="btn1 btn btn-outline-secondary">Add New Picture </a></span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap">
+                    @if (Model != null)
+                    {
+                        foreach (ProductImageModel picture in Model)
+                        {
+                            <div class="" style="margin-left:30px;">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="@Url.Content(picture.ImageURL)" class="card-img-top" alt="..." style="width:290px;height:290px;">
+
+                                </div>
+                            </div>
+                            @*<img src="@Url.Content(picture.ImageUrl)" />*@
+                        }
+                    }
+                    
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+<!-- /.row -->

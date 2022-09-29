@@ -1,0 +1,131 @@
+﻿
+@model IEnumerable<Home_A_Heaven.Models.ProductModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 1;
+}
+<style>
+    body{
+        font-family:'Times New Roman';
+        color:gray;
+    }
+</style>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">Dashboard</li>
+
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header" style="border:0px;">
+                    <div class="d-flex justify-content-between">
+                        <h1 class="" style="color:black;">Products</h1>
+                        <span><a href="/Admin/AddProducts" class="btn btn-outline-secondary">Add Product</a></span>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                No#
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Real Price
+                            </th>
+                            <th>
+                                Discount
+                            </th>
+                            <th>
+                                Discount Price
+                            </th>
+                            <th>
+                                Insert Date
+                            </th>
+                            <th>
+                                Product Specification
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Images
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th>
+                                        @count
+                                    </th>
+                                    <th>
+                                        @Html.DisplayFor(modelItem =>item.Name)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.Old_Price)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.Discount)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.New_Price)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.InsertDate)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.Matrial) ,  @Html.DisplayFor(modelItem => item.Color),  @Html.DisplayFor(modelItem => item.Height)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </th>
+                                    <th>
+                                        <a class="btn btn-link" href="/Admin/ProductImages/@item.Id">Product Images</a>
+                                    </th>
+                                    <th>
+                                        <a class="btn btn-primary" href="/Admin/ProductDetail/@item.Id">Detail</a>
+                                        <a class="btn btn-secondary" href="/Admin/ProductUpdate/@item.Id">Update</a>
+                                        <a class="btn btn-danger" href="/Admin/ProductDelete/@item.Id">Delete</a>
+
+                                    </th>
+                                </tr>
+                            }
+
+                        }
+                        else
+                        {
+                           
+                        }
+                    </table>
+               
+
+
+                </div><!--Flex end-->
+            </div>
+
+        </div>
+    </div>
+
+</div>
